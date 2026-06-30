@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class NhiPhan_while {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        System.out.print("Nhap so nguyen >0: ");
+        System.out.print("Nhap so nguyen > 0: ");
         int n = sc.nextInt();
 
         String nhiPhan = "";
