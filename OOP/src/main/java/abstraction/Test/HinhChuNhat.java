@@ -1,0 +1,16 @@
+package abstraction.Test;
+
+public class HinhChuNhat extends Hinh {
+    private double chieuRong, chieuDai  ;
+
+    public HinhChuNhat(ToaDo toaDo, double chieuRong, double chieuDai) {
+        super(toaDo);
+        this.chieuRong = chieuRong;
+        this.chieuDai = chieuDai;
+    }
+
+    @Override
+    public double tinhDienTinh() {
+        return this.chieuRong*this.chieuRong;
+    }
+}
