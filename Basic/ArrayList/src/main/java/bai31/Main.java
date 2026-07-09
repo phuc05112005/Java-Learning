@@ -7,26 +7,25 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        System.out.print("Nhap so phan tu: ");
+        System.out.print("Nhap so phan tu trong list: ");
         int n = sc.nextInt();
-
         Random rd = new Random();
-        ArrayList<Integer> lst = new ArrayList<>();
-        for(int i = 0; i<n; i++){
-            lst.add(rd.nextInt(0,160));
-        }
-        System.out.println(lst);
 
-        int dem = 0;
-        String viTri = "";
-        for(int i = 0; i<lst.size(); i++){
-            if(lst.get(i)<80){
-                dem++;
-                viTri += i + " ";
+        ArrayList<Integer> arr = new ArrayList<>();
+        for(int i = 0; i<n;i++){
+            arr.add(rd.nextInt(160));
+        }
+        System.out.println(arr.toString());
+
+        int count = 0;
+        StringBuilder viTri = new StringBuilder();
+        for(int i = 0; i<arr.size(); i++){
+            if(arr.get(i) < 80){
+                count++;
+                viTri.append(i).append(" ");
             }
         }
-        System.out.println("So luong phan tu <80 trong list: " + dem);
-        System.out.println("Vi tri cua cac phan tu do la: " + viTri);
-
+        System.out.println("Tong so phan tu nho hon 80: " + count);
+        System.out.println("Vi tri index cua nhung phan tu trong list tuong ung: " + viTri);
     }
 }

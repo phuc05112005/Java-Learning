@@ -14,15 +14,16 @@ public class Main {
                 "12%2 = ?"));
 
         ArrayList<Float> dapAn = new ArrayList<>(List.of(14f, 50f, 4f, 0f));
-        for(int i = 0; i<lst.size();i++){
+        for(int i = 0; i<dapAn.size();i++){
             System.out.println(lst.get(i));
-            System.out.print("Nhap dap an: ");
+            System.out.print("Tra loi: ");
             Float traLoi = sc.nextFloat();
             if(traLoi.equals(dapAn.get(i))){
                 System.out.println("Chinh xac!");
             } else {
-                System.out.println("Khong dung! Dap an la " + dapAn.get(i));
+                System.out.println("Sai roi!");
             }
         }
+
     }
 }
