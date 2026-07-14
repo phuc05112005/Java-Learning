@@ -1,5 +1,6 @@
 package quanLyDanhSachSV;
 
+import java.io.File;
 import java.util.Scanner;
 
 public class Test {
@@ -20,6 +21,8 @@ public class Test {
                             + "7.   Xóa một sinh viên ra khỏi danh sách dựa trên mã sinh viên.\n"
                             + "8.   Tìm kiếm tất cả sinh viên dựa trên Tên được nhập từ bàn phím.\n"
                             + "9.   Xuất ra danh sách sinh viên có điểm từ cao đến thấp.\n"
+                            + "10.  Ghi du lieu danh sach xuong file.\n"
+                            + "11.  Doc du lieu trong file.\n"
                             + "0.   Thoát chương trình."
             );
             System.out.print("Nhap chon: ");
@@ -65,6 +68,19 @@ public class Test {
                 System.out.print("Nhap ten sinh vien can tim:" );
                 String ten = sc.nextLine();
                 danhSachSV.timKiemSV(ten);
+            } else if(luaChon==9){
+                danhSachSV.sapXepSinhVienGiamDanTheoDiem();
+                danhSachSV.inDanhSanhSV();
+            } else if(luaChon==10){
+                System.out.print("Nhap ten file: ");
+                String s = sc.nextLine();
+                File f = new File(s);
+                danhSachSV.ghiDuLieuXuongFile(f);
+            } else if(luaChon==11){
+                System.out.print("Nhap ten file: ");
+                String s = sc.nextLine();
+                File f = new File(s);
+                danhSachSV.docDuLieuFile(f);
             }
         } while(luaChon != 0);
 

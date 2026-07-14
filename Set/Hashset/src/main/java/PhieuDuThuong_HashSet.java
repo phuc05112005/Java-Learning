@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class phieuDuThuong_HashSet {
+public class PhieuDuThuong_HashSet {
         Set<String> thungPhieu = new HashSet<String>();
 
         public boolean themPhieu(String giaTri){
@@ -46,7 +46,7 @@ public class phieuDuThuong_HashSet {
 
         public static void main(String[] args) {
             Scanner sc = new Scanner(System.in);
-            phieuDuThuong_HashSet dsPhieu = new phieuDuThuong_HashSet();
+            PhieuDuThuong_HashSet dsPhieu = new PhieuDuThuong_HashSet();
             int luaChon;
             do{
                 System.out.println("MENU");

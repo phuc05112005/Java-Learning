@@ -1,9 +1,10 @@
 package quanLyDanhSachSV;
 
+import java.io.Serializable;
 import java.lang.constant.Constable;
 import java.util.Objects;
 
-public class SinhVien implements Comparable<SinhVien> {
+public class SinhVien implements Comparable<SinhVien>, Serializable {
     private String maSV;
     private String hoVaTen;
     private int namSinh;
