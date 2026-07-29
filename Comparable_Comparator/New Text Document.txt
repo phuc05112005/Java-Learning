@@ -1,0 +1,750 @@
+================ JAVA SORTING =================
+
+COMPARABLE vs COMPARATOR
+
+================================================
+
+
+Trong Java, khi làm việc với Collection như List, Set, Map,
+chúng ta thường cần sắp xếp dữ liệu.
+
+Ví dụ:
+
+Danh sách sinh viên:
+
+Student
+- id
+- name
+- age
+- score
+
+
+Có thể cần sắp xếp:
+
+- Theo id
+- Theo tên
+- Theo điểm
+- Theo tuổi
+
+
+Java cung cấp 2 cách chính:
+
+1. Comparable
+2. Comparator
+
+
+
+================================================
+1. COMPARABLE
+================================================
+
+
+Bản chất:
+
+Comparable dùng khi một class tự định nghĩa cách
+sắp xếp mặc định của chính nó.
+
+
+Nói đơn giản:
+
+Object tự biết nó nên đứng trước hay đứng sau
+object khác.
+
+
+Ví dụ:
+
+
+class Student implements Comparable<Student>{
+
+    int id;
+    String name;
+    double score;
+
+
+    @Override
+    public int compareTo(Student other){
+
+        return Integer.compare(this.id, other.id);
+
+    }
+
+}
+
+
+
+Ở đây Student tự quy định:
+
+Sinh viên mặc định được sắp xếp theo ID.
+
+
+
+Khi sử dụng:
+
+
+Collections.sort(students);
+
+
+
+Java sẽ gọi:
+
+
+student1.compareTo(student2)
+
+
+
+để biết:
+
+- student1 đứng trước student2
+- student1 đứng sau student2
+- hai object bằng nhau
+
+
+
+================================================
+compareTo() là gì?
+================================================
+
+
+compareTo() chỉ là tên của một method trong interface Comparable.
+
+
+Interface Comparable:
+
+
+public interface Comparable<T>{
+
+    int compareTo(T other);
+
+}
+
+
+
+Ý nghĩa:
+
+
+compareTo()
+
+=
+Hàm trả lời:
+
+"Object hiện tại so với object kia như thế nào?"
+
+
+
+Kết quả:
+
+
+Nếu trả về số âm:
+
+object hiện tại đứng trước object kia.
+
+
+Nếu trả về 0:
+
+hai object bằng nhau.
+
+
+Nếu trả về số dương:
+
+object hiện tại đứng sau object kia.
+
+
+
+Ví dụ:
+
+
+a.compareTo(b)
+
+
+
+Nếu:
+
+a < b
+
+=> trả về âm
+
+
+a = b
+
+=> trả về 0
+
+
+a > b
+
+=> trả về dương
+
+
+
+================================================
+Lưu ý về compareTo()
+================================================
+
+
+compareTo() không chỉ dành cho String.
+
+
+String chỉ là một class đã implement Comparable sẵn.
+
+
+
+Ví dụ:
+
+
+String:
+
+"An".compareTo("Binh")
+
+
+
+Integer:
+
+Integer.compare(10,20)
+
+
+
+Double:
+
+Double.compare(8.5,9)
+
+
+
+LocalDate:
+
+date1.compareTo(date2)
+
+
+
+Bất kỳ class nào cũng có thể có compareTo()
+nếu class đó implement Comparable.
+
+
+
+================================================
+Ví dụ Comparable với Student
+================================================
+
+
+class Student implements Comparable<Student>{
+
+
+    int id;
+    String name;
+    double score;
+
+
+    @Override
+    public int compareTo(Student other){
+
+        return Double.compare(
+            this.score,
+            other.score
+        );
+
+    }
+
+}
+
+
+
+Ở đây:
+
+Student được sắp xếp mặc định theo điểm.
+
+
+
+Không quan trọng Student có:
+
+id
+name
+score
+
+
+Bạn muốn so sánh thuộc tính nào thì tự viết.
+
+
+
+Có thể:
+
+
+Theo id:
+
+
+return Integer.compare(this.id, other.id);
+
+
+
+Theo score:
+
+
+return Double.compare(this.score, other.score);
+
+
+
+Theo name:
+
+
+return this.name.compareTo(other.name);
+
+
+
+================================================
+Khi nào dùng Comparable?
+================================================
+
+
+Dùng khi:
+
+Class chỉ có một cách sắp xếp mặc định.
+
+
+
+Ví dụ:
+
+
+Student:
+
+Mặc định theo ID.
+
+
+Product:
+
+Mặc định theo mã sản phẩm.
+
+
+Employee:
+
+Mặc định theo mã nhân viên.
+
+
+
+================================================
+2. COMPARATOR
+================================================
+
+
+Bản chất:
+
+
+Comparator dùng khi bên ngoài class muốn tự
+định nghĩa cách sắp xếp.
+
+
+
+Nói đơn giản:
+
+
+Class không cần biết cách sắp xếp.
+
+Người sử dụng quyết định cách sắp xếp.
+
+
+
+Ví dụ:
+
+
+class Student{
+
+    int id;
+    String name;
+    double score;
+
+}
+
+
+
+Muốn:
+
+- Sort theo điểm
+- Sort theo tên
+- Sort theo tuổi
+
+
+Không cần sửa class Student.
+
+Dùng Comparator.
+
+
+
+================================================
+Comparator cách viết cơ bản
+================================================
+
+
+Cách cũ:
+
+
+Comparator<Student> comparator =
+new Comparator<Student>(){
+
+    @Override
+    public int compare(Student s1, Student s2){
+
+        return Double.compare(
+            s1.score,
+            s2.score
+        );
+
+    }
+
+};
+
+
+
+Cách hiện đại dùng Lambda:
+
+
+students.sort(
+
+    (s1,s2) ->
+        Double.compare(
+            s1.score,
+            s2.score
+        )
+
+);
+
+
+
+================================================
+Comparator.comparing()
+================================================
+
+
+Đây là cách dùng phổ biến nhất hiện nay.
+
+
+
+Ví dụ:
+
+
+students.sort(
+
+    Comparator.comparing(Student::getScore)
+
+);
+
+
+
+Ý nghĩa:
+
+
+Lấy score của Student
+
+Sau đó Java tự tạo luật so sánh.
+
+
+
+Tương đương với:
+
+
+(s1,s2) ->
+
+Double.compare(
+    s1.getScore(),
+    s2.getScore()
+)
+
+
+
+================================================
+Ví dụ Comparator
+================================================
+
+
+Sort điểm tăng dần:
+
+
+students.sort(
+
+    Comparator.comparing(Student::getScore)
+
+);
+
+
+
+Kết quả:
+
+
+7
+8
+9
+
+
+
+-----------------------------------------------
+
+
+Sort tên A-Z:
+
+
+students.sort(
+
+    Comparator.comparing(Student::getName)
+
+);
+
+
+
+Kết quả:
+
+
+An
+Binh
+Phuc
+
+
+
+-----------------------------------------------
+
+
+Sort tuổi:
+
+
+students.sort(
+
+    Comparator.comparing(Student::getAge)
+
+);
+
+
+
+================================================
+reversed()
+================================================
+
+
+Dùng để đảo ngược thứ tự.
+
+
+
+Tăng dần:
+
+
+Comparator.comparing(Student::getScore)
+
+
+
+Kết quả:
+
+
+7
+8
+9
+
+
+
+Giảm dần:
+
+
+Comparator
+    .comparing(Student::getScore)
+    .reversed()
+
+
+
+Kết quả:
+
+
+9
+8
+7
+
+
+
+================================================
+thenComparing()
+================================================
+
+
+Dùng khi có nhiều điều kiện sắp xếp.
+
+
+
+Ví dụ:
+
+
+Sắp xếp sinh viên:
+
+
+Ưu tiên 1:
+Điểm cao trước
+
+
+Ưu tiên 2:
+Nếu điểm bằng nhau thì tên A-Z
+
+
+
+Code:
+
+
+students.sort(
+
+    Comparator
+        .comparing(Student::getScore)
+        .reversed()
+        .thenComparing(Student::getName)
+
+);
+
+
+
+Ý nghĩa:
+
+
+Sort theo score trước.
+
+Nếu score khác nhau:
+=> quyết định luôn.
+
+
+Nếu score bằng nhau:
+=> xét tiếp name.
+
+
+
+================================================
+So sánh Comparable và Comparator
+================================================
+
+
+Comparable:
+
+
+- Nằm bên trong class.
+- Dùng compareTo().
+- Class tự định nghĩa cách sắp xếp.
+- Chỉ có một cách sắp xếp mặc định.
+
+
+
+Comparator:
+
+
+- Nằm bên ngoài class.
+- Dùng compare().
+- Người dùng tự tạo luật sắp xếp.
+- Có thể có nhiều cách sắp xếp.
+
+
+
+================================================
+Cách nhớ nhanh
+================================================
+
+
+Comparable:
+
+"Tôi là object.
+Tôi tự biết tôi nên được sắp xếp như thế nào."
+
+
+
+Ví dụ:
+
+
+Student mặc định theo ID.
+
+
+
+-----------------------------------------------
+
+
+Comparator:
+
+"Tôi là người ngoài.
+Tôi quyết định object được sắp xếp ra sao."
+
+
+
+Ví dụ:
+
+
+Student hôm nay sort theo điểm.
+
+Ngày mai sort theo tên.
+
+Ngày kia sort theo tuổi.
+
+
+
+================================================
+Trong Java Backend thực tế
+================================================
+
+
+Comparator được dùng nhiều hơn.
+
+
+Ví dụ:
+
+
+API:
+
+
+GET /products?sort=price
+
+
+
+Backend:
+
+
+products.sort(
+
+    Comparator
+        .comparing(Product::getPrice)
+);
+
+
+
+Các trường hợp thường gặp:
+
+
+- Sort sản phẩm theo giá.
+- Sort đơn hàng theo ngày tạo.
+- Sort user theo tên.
+- Sort dữ liệu trả về từ database.
+
+
+
+Comparable chủ yếu cần hiểu để:
+
+- Đọc code.
+- Hiểu String, Integer, LocalDate.
+- Hiểu TreeSet, TreeMap.
+
+
+
+================================================
+TÓM TẮT 1 DÒNG
+================================================
+
+
+Comparable:
+
+Class tự định nghĩa thứ tự mặc định.
+
+
+Comparator:
+
+Bên ngoài tạo cách sắp xếp tùy ý.
+
+
+compareTo():
+
+Method dùng để so sánh.
+
+
+comparing():
+
+Tạo Comparator dựa trên thuộc tính.
+
+
+thenComparing():
+
+Thêm tiêu chí sắp xếp phụ.
+
+
+reversed():
+
+Đảo ngược thứ tự.

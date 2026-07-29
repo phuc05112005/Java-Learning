@@ -1,0 +1,776 @@
+Collection
+│
+├── List
+│   ├── ArrayList
+│   ├── LinkedList
+│   └── Vector
+│
+├── Set
+│   ├── HashSet
+│   ├── LinkedHashSet
+│   └── TreeSet
+│
+└── Queue
+    ├── Deque
+    │   ├── ArrayDeque
+    │   └── LinkedList
+    │
+    └── PriorityQueue
+
+
+Map (không thuộc Collection)
+│
+├── HashMap
+├── LinkedHashMap
+├── TreeMap
+├── Hashtable
+└── ConcurrentHashMap
+
+
+
+1. Có cần lưu nhiều dữ liệu không?
+↓
+
+2. Có phải Key → Value không?
+Có
+↓
+Map
+
+Không
+↓
+
+3. Có phải xử lý theo hàng đợi không?
+Có
+↓
+Queue
+
+Không
+↓
+
+4. Dữ liệu có được trùng không?
+
+Không
+↓
+Set
+
+Có
+↓
+List
+
+
+
+================ JAVA COLLECTIONS FRAMEWORK =================
+
+# 1. LIST
+==============================================================
+
+Bản chất:
+- Lưu dữ liệu dạng danh sách.
+- Có thứ tự.
+- Có index.
+- Cho phép phần tử trùng nhau.
+
+Ví dụ:
+
+Index:
+0 -> Java
+1 -> Spring
+2 -> Docker
+3 -> Java
+
+
+--------------------------------------------------------------
+1. ArrayList ⭐⭐⭐⭐⭐
+--------------------------------------------------------------
+
+Bản chất:
+- Dùng mảng động (Dynamic Array).
+- Khi đầy sẽ tự tạo mảng mới lớn hơn và copy dữ liệu sang.
+
+Đặc điểm:
+✅ Có index.
+✅ Truy cập phần tử rất nhanh.
+✅ Duyệt dữ liệu nhanh.
+❌ Thêm/xóa ở giữa chậm vì phải dịch chuyển phần tử.
+
+Dùng khi:
+- Chủ yếu đọc dữ liệu.
+- Hiển thị danh sách.
+- Lấy dữ liệu theo vị trí.
+
+Ví dụ thực tế:
+- Danh sách User từ database.
+- Danh sách Product.
+- Danh sách Order.
+- Danh sách Comment.
+
+Ví dụ:
+
+List<User> users = new ArrayList<>();
+
+--------------------------------------------------------------
+2. LinkedList ⭐⭐
+--------------------------------------------------------------
+
+Bản chất:
+- Dùng cấu trúc liên kết (Node).
+- Mỗi phần tử chứa:
+    + dữ liệu
+    + địa chỉ phần tử trước
+    + địa chỉ phần tử sau
+
+Ví dụ:
+
+A <-> B <-> C
+
+
+Đặc điểm:
+✅ Thêm/xóa đầu/cuối nhanh.
+❌ Truy cập index chậm.
+❌ Tốn bộ nhớ hơn ArrayList.
+
+Dùng khi:
+- Thường xuyên thêm/xóa ở đầu hoặc cuối.
+
+Ví dụ:
+- Undo history.
+- Browser history.
+- Playlist.
+- Task queue.
+
+Ví dụ:
+
+List<Task> tasks = new LinkedList<>();
+
+
+
+==============================================================
+# 2. SET
+==============================================================
+
+Bản chất:
+- Lưu tập hợp dữ liệu duy nhất.
+- Không có index.
+- Không cho phép trùng.
+
+
+--------------------------------------------------------------
+1. HashSet ⭐⭐⭐⭐⭐
+--------------------------------------------------------------
+
+Bản chất:
+- Dựa trên Hash Table.
+- Sử dụng hashCode() và equals() để kiểm tra trùng.
+
+Ví dụ:
+
+Thêm:
+
+Java
+
+Spring
+
+Java
+
+
+Kết quả:
+
+Java
+
+Spring
+
+
+Đặc điểm:
+✅ Tìm kiếm rất nhanh.
+✅ Thêm/xóa nhanh.
+❌ Không giữ thứ tự.
+
+
+Dùng khi:
+- Chỉ cần dữ liệu không trùng.
+- Không quan tâm thứ tự.
+
+
+Ví dụ:
+- Email.
+- Username.
+- Role.
+- Permission.
+- ID người dùng.
+
+
+Code:
+
+Set<String> emails = new HashSet<>();
+
+
+--------------------------------------------------------------
+2. LinkedHashSet ⭐⭐⭐
+--------------------------------------------------------------
+
+Bản chất:
+- Là HashSet + LinkedList bên trong.
+- Vừa chống trùng vừa nhớ thứ tự thêm.
+
+
+Ví dụ:
+
+add:
+
+Java
+
+Spring
+
+Docker
+
+
+Kết quả luôn:
+
+Java
+
+Spring
+
+Docker
+
+
+Đặc điểm:
+✅ Không trùng.
+✅ Giữ thứ tự thêm.
+❌ Chậm hơn HashSet.
+
+
+Dùng khi:
+- Muốn dữ liệu duy nhất.
+- Nhưng vẫn muốn hiển thị theo thứ tự.
+
+
+Ví dụ:
+- Lịch sử tìm kiếm.
+- Danh sách tag.
+- Playlist.
+
+
+Code:
+
+Set<String> history = new LinkedHashSet<>();
+
+
+--------------------------------------------------------------
+3. TreeSet ⭐⭐⭐
+--------------------------------------------------------------
+
+Bản chất:
+- Dùng cây đỏ đen (Red-Black Tree).
+- Luôn tự sắp xếp dữ liệu.
+
+
+Ví dụ:
+
+Thêm:
+
+50
+10
+30
+
+
+Kết quả:
+
+10
+30
+50
+
+
+Đặc điểm:
+✅ Không trùng.
+✅ Tự sắp xếp.
+❌ Chậm hơn HashSet.
+
+
+Dùng khi:
+- Cần dữ liệu luôn được sắp xếp.
+
+
+Ví dụ:
+- Ranking.
+- Điểm số.
+- Danh sách tên đã sort.
+- Báo cáo thống kê.
+
+
+Code:
+
+Set<Integer> scores = new TreeSet<>();
+
+
+
+==============================================================
+# 3. QUEUE
+==============================================================
+
+Bản chất:
+- Là cấu trúc dữ liệu dạng hàng đợi.
+- Xử lý dữ liệu theo thứ tự.
+- Thường theo FIFO (First In First Out):
+  Vào trước → Ra trước.
+
+Ví dụ:
+
+A → B → C → D
+
+poll()
+
+Lấy ra A
+
+
+Dùng khi:
+- Cần xử lý công việc lần lượt.
+- Có trạng thái chờ xử lý.
+
+Ví dụ:
+- Request từ client.
+- Email queue.
+- Task queue.
+- Order queue.
+
+
+
+--------------------------------------------------------------
+1. ArrayDeque ⭐⭐⭐⭐⭐
+--------------------------------------------------------------
+
+Bản chất:
+- Là implementation của Deque.
+- Dùng mảng 2 đầu (resizable array).
+- Có thể hoạt động như Queue hoặc Stack.
+
+Đặc điểm:
+✅ Tốc độ nhanh.
+✅ Ít tốn bộ nhớ.
+✅ Thay thế Stack cũ.
+✅ Có thể thêm/xóa ở cả hai đầu.
+
+Ví dụ:
+
+Deque:
+
+A <-> B <-> C
+
+
+Các thao tác:
+
+Thêm đầu:
+
+addFirst()
+
+
+Thêm cuối:
+
+addLast()
+
+
+Lấy đầu:
+
+removeFirst()
+
+
+Lấy cuối:
+
+removeLast()
+
+
+
+Dùng khi:
+
+1. Làm Queue:
+
+A → B → C
+
+Vào trước ra trước.
+
+
+Ví dụ:
+- Request queue.
+- Email queue.
+- Task queue.
+
+
+2. Làm Stack:
+
+A
+B
+C
+
+Lấy ra:
+
+C → B → A
+
+
+Ví dụ:
+- Undo.
+- Browser back.
+- Call stack.
+
+
+
+Code:
+
+Deque<Task> queue = new ArrayDeque<>();
+
+
+
+--------------------------------------------------------------
+2. Deque (Double Ended Queue)
+--------------------------------------------------------------
+
+Bản chất:
+- Deque nghĩa là hàng đợi hai đầu.
+- Là interface mở rộng từ Queue.
+- Cho phép thao tác ở cả đầu và cuối.
+
+Khác với Queue:
+
+Queue:
+
+Thêm cuối → Lấy đầu
+
+
+Deque:
+
+Thêm đầu
+Thêm cuối
+Lấy đầu
+Lấy cuối
+
+
+Ví dụ:
+
+Queue:
+
+A → B → C
+
+Chỉ lấy được A.
+
+
+Deque:
+
+A <-> B <-> C
+
+Có thể lấy:
+- A
+- C
+
+
+Có thể thêm:
+- Vào đầu.
+- Vào cuối.
+
+
+Implementation phổ biến:
+
+Deque<String> deque = new ArrayDeque<>();
+
+
+
+--------------------------------------------------------------
+3. LinkedList ⭐⭐
+--------------------------------------------------------------
+
+Bản chất:
+- Dùng Node liên kết.
+- Implement cả:
+    + List
+    + Queue
+    + Deque
+
+
+Có thể dùng:
+
+List:
+
+List<String> list = new LinkedList<>();
+
+
+Queue:
+
+Queue<String> queue = new LinkedList<>();
+
+
+Deque:
+
+Deque<String> deque = new LinkedList<>();
+
+
+Đặc điểm:
+✅ Thêm/xóa đầu cuối nhanh.
+❌ Truy cập index chậm.
+❌ Tốn bộ nhớ hơn ArrayDeque.
+
+
+Hiện nay:
+- Ít dùng LinkedList làm Queue.
+- Thường ưu tiên ArrayDeque.
+
+
+
+--------------------------------------------------------------
+4. PriorityQueue ⭐⭐⭐⭐
+--------------------------------------------------------------
+
+Bản chất:
+- Queue có độ ưu tiên.
+- Không xử lý theo thứ tự thêm vào.
+- Phần tử có độ ưu tiên cao sẽ được lấy trước.
+
+
+Ví dụ:
+
+Thêm:
+
+10
+5
+20
+
+
+Lấy:
+
+5
+10
+20
+
+
+Đặc điểm:
+✅ Xử lý phần tử quan trọng trước.
+❌ Không phải FIFO.
+
+
+Dùng khi:
+- Cần ưu tiên xử lý.
+
+
+Ví dụ:
+- Bệnh viện.
+- CPU Scheduler.
+- Dijkstra Algorithm.
+- Game.
+
+
+Code:
+
+Queue<Integer> queue = new PriorityQueue<>();
+
+
+
+
+==============================================================
+# 4. MAP
+==============================================================
+
+Bản chất:
+
+Lưu dữ liệu dạng:
+
+Key -> Value
+
+
+Ví dụ:
+
+101 -> Phúc
+102 -> An
+103 -> Bình
+
+
+Key không được trùng.
+
+
+--------------------------------------------------------------
+1. HashMap ⭐⭐⭐⭐⭐
+--------------------------------------------------------------
+
+Bản chất:
+- Hash Table.
+- Dùng hashCode() để tìm vị trí.
+
+
+Đặc điểm:
+✅ Rất nhanh.
+✅ Dùng nhiều nhất.
+❌ Không giữ thứ tự.
+
+
+Dùng khi:
+- Cần tra cứu nhanh.
+
+
+Ví dụ:
+
+ID -> User
+
+Username -> Account
+
+ProductID -> Product
+
+
+Code:
+
+Map<Long, User> users = new HashMap<>();
+
+
+--------------------------------------------------------------
+2. LinkedHashMap ⭐⭐⭐
+--------------------------------------------------------------
+
+Bản chất:
+- HashMap + LinkedList.
+
+
+Đặc điểm:
+✅ Nhanh như HashMap.
+✅ Giữ thứ tự thêm.
+
+
+Dùng khi:
+- Muốn map nhưng cần nhớ thứ tự.
+
+
+Ví dụ:
+- Cache.
+- Lịch sử truy cập.
+
+
+Code:
+
+Map<String, String> map = new LinkedHashMap<>();
+
+
+--------------------------------------------------------------
+3. TreeMap ⭐⭐⭐
+--------------------------------------------------------------
+
+Bản chất:
+- Dùng cây đỏ đen.
+- Tự sắp xếp Key.
+
+
+Ví dụ:
+
+Key:
+
+50
+10
+30
+
+
+Kết quả:
+
+10
+30
+50
+
+
+Đặc điểm:
+✅ Key luôn được sắp xếp.
+❌ Chậm hơn HashMap.
+
+
+Dùng khi:
+- Cần dữ liệu theo thứ tự.
+
+
+Ví dụ:
+- Báo cáo.
+- Ranking.
+- Thống kê.
+
+
+Code:
+
+Map<Integer,String> map = new TreeMap<>();
+
+
+--------------------------------------------------------------
+4. Hashtable ⭐⭐
+--------------------------------------------------------------
+
+Bản chất:
+- Phiên bản cũ của HashMap.
+- Có synchronized.
+
+
+Đặc điểm:
+- Thread-safe.
+- Chậm.
+
+
+Hiện nay:
+❌ Ít dùng.
+
+Thay bằng:
+
+ConcurrentHashMap.
+
+
+
+--------------------------------------------------------------
+5. ConcurrentHashMap ⭐⭐⭐⭐
+--------------------------------------------------------------
+
+Bản chất:
+- HashMap dành cho môi trường đa luồng.
+
+
+Dùng khi:
+- Nhiều Thread cùng đọc/ghi dữ liệu.
+
+
+Ví dụ:
+- Cache server.
+- Online users.
+- Session.
+
+
+==============================================================
+TÓM TẮT 1 DÒNG
+==============================================================
+
+ArrayList:
+→ Danh sách đọc nhiều.
+
+
+LinkedList:
+→ Thêm/xóa đầu cuối nhiều.
+
+
+HashSet:
+→ Không trùng, không cần thứ tự.
+
+
+LinkedHashSet:
+→ Không trùng + giữ thứ tự.
+
+
+TreeSet:
+→ Không trùng + tự sắp xếp.
+
+
+ArrayDeque:
+→ Queue nhanh.
+
+
+PriorityQueue:
+→ Queue theo ưu tiên.
+
+
+HashMap:
+→ Key-Value nhanh nhất.
+
+
+LinkedHashMap:
+→ Key-Value + giữ thứ tự.
+
+
+TreeMap:
+→ Key-Value + sắp xếp Key.
+
+
+ConcurrentHashMap:
+→ Map cho đa luồng.
