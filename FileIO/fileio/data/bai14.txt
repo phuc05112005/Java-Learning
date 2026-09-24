@@ -1,0 +1,4 @@
+Laptop,2000
+Phone,1000
+Mouse,50
+Keyboard,80
